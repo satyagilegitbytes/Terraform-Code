@@ -1,0 +1,29 @@
+Explanation of New Variables:
+default_branch: The default branch for the repository (e.g., main).
+
+branches: A list of branches to create in the repository.
+
+topics: A list of topics (tags) to add to the repository.
+
+allow_merge_commit: Whether to allow merge commits.
+
+allow_squash_merge: Whether to allow squash merges.
+
+allow_rebase_merge: Whether to allow rebase merges.
+
+has_issues: Whether to enable issues for the repository.
+
+has_projects: Whether to enable projects for the repository.
+
+has_wiki: Whether to enable the wiki for the repository.
+----------------------------------------------------------------------------------------------------------
+To use the JSON file for variable input, run the following commands:
+
+Initialize Terraform:
+terraform init
+
+Plan the Changes:
+terraform plan -var-file="terraform.tfvars.json"
+
+Apply the Changes:
+terraform apply -var-file="terraform.tfvars.json"
