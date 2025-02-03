@@ -25,4 +25,11 @@ module "github_repo" {
   has_issues             = each.value.has_issues                # Whether to enable issues for the repository
   has_projects           = each.value.has_projects              # Whether to enable projects for the repository
   has_wiki               = each.value.has_wiki                  # Whether to enable the wiki for the repository
+  # Ruleset configuration
+  ruleset_name                     = each.value.ruleset_name
+  ruleset_target                   = each.value.ruleset_target
+  ruleset_enforcement              = each.value.ruleset_enforcement
+  ruleset_ref_include              = each.value.ruleset_ref_include
+  ruleset_ref_exclude              = each.value.ruleset_ref_exclude
+  ruleset_required_checks          = each.value.ruleset_required_checks
 }

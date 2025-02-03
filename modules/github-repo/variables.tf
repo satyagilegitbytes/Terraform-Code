@@ -90,3 +90,38 @@ variable "has_wiki" {
   type        = bool
   default     = false
 }
+variable "ruleset_name" {
+  description = "Name of the ruleset"
+  type        = string
+  default     = "Test Ruleset"
+}
+
+variable "ruleset_target" {
+  description = "Target branch for the ruleset (e.g., 'branch', 'tag')"
+  type        = string
+  default     = "branch"
+}
+
+variable "ruleset_enforcement" {
+  description = "Enforcement level for the ruleset (e.g., 'active', 'disabled')"
+  type        = string
+  default     = "active"
+}
+
+variable "ruleset_ref_include" {
+  description = "Branches to include in the ruleset"
+  type        = list(string)
+  default     = ["main"]
+}
+
+variable "ruleset_ref_exclude" {
+  description = "Branches to exclude from the ruleset"
+  type        = list(string)
+  default     = []
+}
+
+variable "ruleset_required_checks" {
+  description = "List of required status checks for the ruleset"
+  type        = list(string)
+  default     = []
+}
