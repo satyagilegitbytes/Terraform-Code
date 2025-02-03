@@ -42,3 +42,28 @@ resource "github_repository_collaborator" "collaborator" {
   permission = var.repository_access_level == "user" ? "push" : "pull"  # Set permission level
   depends_on = [github_repository.repo]     # Ensure repo exists before adding collaborator
 }
+resource "github_repository_ruleset" "ruleset" {
+  repository  = github_repository.repo.name
+  name        = var.ruleset_name
+  target      = "branch"
+  enforcement = var.ruleset_enforcement
+  depends_on = [github_repository.repo]
+
+  conditions {
+    ref_name {
+      include = ["refs/heads/main"]
+      exclude = var.ruleset_ref_exclude
+    }
+  }
+
+  rules {
+    required_status_checks {
+      dynamic "required_check" {
+        for_each = var.ruleset_required_checks
+        content {
+          context = required_check.value
+        }
+      }
+    }
+  }
+}
