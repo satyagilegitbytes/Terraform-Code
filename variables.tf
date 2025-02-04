@@ -53,11 +53,11 @@ variable "repositories" {
     
     # Whether to enable the wiki for the repository
     has_wiki               = bool
-    ruleset_name           = string
-    ruleset_target         = string
-    ruleset_enforcement    = string
-    ruleset_ref_include    = list(string)
-    ruleset_ref_exclude    = list(string)
-    ruleset_required_checks = list(string)
+    ruleset_name            = optional(string, null)
+    ruleset_target          = optional(string, null)
+    ruleset_enforcement     = optional(string, null)
+    ruleset_ref_include     = optional(list(string), [])
+    ruleset_ref_exclude     = optional(list(string), [])
+    ruleset_required_checks = optional(list(string), [])
   }))
 }

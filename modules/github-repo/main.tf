@@ -21,10 +21,13 @@ resource "github_repository_topics" "repo_topics" {
 
 # Creates multiple branches for the repository
 resource "github_branch" "branches" {
-  for_each   = toset(var.branches)          # Convert branches list to set
-  repository = github_repository.repo.name  # Reference to created repository
-  branch     = each.value                   # Branch name from iteration
-  depends_on = [github_repository.repo]     # Ensure repo exists before creating branches
+  for_each = toset([ 
+    for branch in var.branches : branch 
+    if branch != var.default_branch  # Skip the default branch
+  ])
+
+  repository = github_repository.repo.name
+  branch     = each.value
 }
 
 # Sets the default branch for the repository
@@ -42,10 +45,13 @@ resource "github_repository_collaborator" "collaborator" {
   permission = var.repository_access_level == "user" ? "push" : "pull"  # Set permission level
   depends_on = [github_repository.repo]     # Ensure repo exists before adding collaborator
 }
+
+# Conditionally create ruleset if ruleset_name is provided
 resource "github_repository_ruleset" "ruleset" {
-  repository  = github_repository.repo.name
-  name        = var.ruleset_name
-  target      = "branch"
+  count      = var.ruleset_name != null ? 1 : 0  # Create only if ruleset_name exists
+  repository = github_repository.repo.name
+  name       = var.ruleset_name
+  target     = "branch"
   enforcement = var.ruleset_enforcement
   depends_on = [github_repository.repo]
 
